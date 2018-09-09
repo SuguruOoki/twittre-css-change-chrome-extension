@@ -1,29 +1,21 @@
-let dashboard = function (_deleteElementClassNames) {
-	
+let dashboard = function() {
 	// setterを用意すべきな気がしている
-	this._deleteElementClassNames = _deleteElementClassNames;
-	
-	this.getDashboard = function() {
-		return $(this._deleteElementClassNames);
-	}
 	
 	/**
-	 * [description]
-	 *
+	 * 削除する要素をclassで指定して削除を行う
+	 * MEMO: 本当は削除できたかどうかをbooleanで返す方が綺麗な気がしている。
+	 * また、外の値をそのままオブジェクト内のメソッドの引数にそのまま使うのもまずい気がしている。
+	 * その辺りどうか、質問してみる。
+	 * 
 	 * @return {void}
 	 */
-	this.delete = function() {
+	this._delete = function(_deleteElementClassNames) {
 		$(_deleteElementClassNames).remove();
-		return true;
 	};
-}
-
-
+};
 
 let User = function (_getUserInfoClassNames, _moveUserInfoDestination) {
-	// console.dir($(_getUserInfoClassNames));
-	// こいつらにもsetterを用意してあげると親切か？
-	this._getUserInfoClassNames = _getUserInfoClassNames;
+	this._getUserInfoClassNames   = _getUserInfoClassNames;
 	this._moveUserInfoDestination = _moveUserInfoDestination;
 	
 	/**
@@ -43,18 +35,19 @@ let User = function (_getUserInfoClassNames, _moveUserInfoDestination) {
 	 * @return {void}
 	 */
 	this._moveUser = function() {
-		this.getUser().appendTo($(this._moveUserInfoDestination));
+		this._getUser().appendTo($(this._moveUserInfoDestination));
 	};
-}
+};
 
 // ProfileCardStats-stat Arrange-sizeFit
 // id: global-actions, class: nav js-global-actions
 let moveElementClassNames     = '.ProfileCardStats-stat, .Arrange-sizeFit';
 let moveDestinationClassNames = '.nav, .js-global-actions';
 
-let trend = dashboard.delete('.Trends, .trends');
-let rightDashboard = dashboard.delete('.dashboard-right');
-let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit', '.nav, .js-global-actions');
+let deleteDom = new dashboard();
+deleteDom._delete('.Trends, .trends');
+deleteDom._delete('.dashboard-right');
+// let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit', '.nav, .js-global-actions');
 
 // 以下のスタイルに入れたDOMの内容を変更しないとpaddingなどが効いた状態となる
 /**
