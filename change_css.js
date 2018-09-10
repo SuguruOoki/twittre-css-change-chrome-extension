@@ -48,6 +48,7 @@ let deleteDom = new dashboard();
 deleteDom._delete('.Trends, .trends');
 deleteDom._delete('.dashboard-right');
 // let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit', '.nav, .js-global-actions');
+$('.global-nav-inner').css('background-color', '#28b9ff');
 
 // 以下のスタイルに入れたDOMの内容を変更しないとpaddingなどが効いた状態となる
 /**
