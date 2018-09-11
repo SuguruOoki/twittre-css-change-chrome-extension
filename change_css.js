@@ -47,7 +47,8 @@ let moveDestinationClassNames = '.nav, .js-global-actions';
 let deleteDom = new dashboard();
 deleteDom._delete('.Trends, .trends');
 deleteDom._delete('.dashboard-right');
-// let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit', '.nav, .js-global-actions');
+// let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit');
+
 $('.global-nav-inner').css('background-color', '#28b9ff');
 
 // 以下のスタイルに入れたDOMの内容を変更しないとpaddingなどが効いた状態となる
@@ -62,24 +63,25 @@ $('.global-nav-inner').css('background-color', '#28b9ff');
  */
 
 //ストリーム変更時にいいねを消し去る
-// function ObserveStream(){
-// 	//オブザーバーの作成
-// 	var observer = new MutationObserver(hide_like);
-// 	//監視の開始
-// 	observer.observe(document.getElementsByClassName('stream-items')[0], {
-// 	    attributes: true,
-// 	    childList:  true
-// 	});
-// 	console.log("observe");
-// 	// hide_like();
-// 	delete_japanese_trend();
-// } 
-// //body変更時にObserveStreamを設定する。
-// //オブザーバーの作成
-// var observer = new MutationObserver(ObserveStream);
-// //監視の開始
-// observer.observe(document.getElementsByTagName("body")[0], {
-//     attributes: true
-// });
+function ObserveStream(){
+	//オブザーバーの作成
+	var observer = new MutationObserver(/*ここに実行したい関数を入れる*/);
+	//監視の開始
+	observer.observe(document.getElementsByClassName('stream-items')[0], {
+	    attributes: true,
+	    childList:  true
+	});
+	console.log("observe");
+	// hide_like();
+	// delete_japanese_trend();
+	/*ここに実行したい関数を入れる*/
+} 
+//body変更時にObserveStreamを設定する。
+//オブザーバーの作成
+var observer = new MutationObserver(ObserveStream);
+//監視の開始
+observer.observe(document.getElementsByTagName("body")[0], {
+    attributes: true
+});
 
 
