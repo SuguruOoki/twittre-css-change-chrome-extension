@@ -39,17 +39,18 @@ let User = function (_getUserInfoClassNames, _moveUserInfoDestination) {
 	};
 };
 
-// ProfileCardStats-stat Arrange-sizeFit
-// id: global-actions, class: nav js-global-actions
 let moveElementClassNames     = '.ProfileCardStats-stat, .Arrange-sizeFit';
 let moveDestinationClassNames = '.nav, .js-global-actions';
 
 let deleteDom = new dashboard();
 deleteDom._delete('.Trends, .trends');
 deleteDom._delete('.dashboard-right');
-// let getElement = User('.ProfileCardStats-stat, .Arrange-sizeFit');
 
 $('.global-nav-inner').css('background-color', '#28b9ff');
+
+function updateTimeLine() {
+	$('.new-tweets-bar, .js-new-tweets-bar').click()
+}
 
 // 以下のスタイルに入れたDOMの内容を変更しないとpaddingなどが効いた状態となる
 /**
@@ -59,29 +60,50 @@ $('.global-nav-inner').css('background-color', '#28b9ff');
     border-bottom-width: 0px;
     padding-left: 0px;
     padding-right: 0px;
-
  */
 
-//ストリーム変更時にいいねを消し去る
-function ObserveStream(){
-	//オブザーバーの作成
-	var observer = new MutationObserver(/*ここに実行したい関数を入れる*/);
-	//監視の開始
-	observer.observe(document.getElementsByClassName('stream-items')[0], {
-	    attributes: true,
-	    childList:  true
-	});
-	console.log("observe");
-	// hide_like();
-	// delete_japanese_trend();
-	/*ここに実行したい関数を入れる*/
-} 
-//body変更時にObserveStreamを設定する。
-//オブザーバーの作成
-var observer = new MutationObserver(ObserveStream);
-//監視の開始
-observer.observe(document.getElementsByTagName("body")[0], {
-    attributes: true
-});
+ /**
+  * 新しいツイートがあったら要素をクリックする無名関数。
+  * FIXME: jQueryと普通のJavascriptが混ざっておかしな感じになっているため、
+  * もし見本として見せることがあれば、書き直す必要がある。
+  * 
+  * @see https://qiita.com/munieru_jp/items/a6f1433652124a2165e4
+  * @return {[type]}
+  */
+ (function() {
+     'use strict';
 
+     const CLASS_NEW_TWEETS_BAR = 'new-tweets-bar';
 
+     //監視ターゲットの取得
+     const timeline        = document.getElementById('timeline');
+     const streamContainer = timeline.querySelector('.stream-container');
+     const streamItem      = streamContainer.querySelector('.stream-item');
+
+    //オブザーバーの作成
+	// observerの中の処理としては、recordsは引数として持っており、その中で取得する値を決めている。
+	// 取得した値を中でclickするといった動作となっている。
+	// MutaitationObserverの引数はcallback
+	// MutationObserver(
+    //   function callback
+    // );
+    const observer = new MutationObserver(records => {
+        records.forEach(record => {
+            Array.from(record.addedNodes)
+                .filter(node => node.classList.contains(CLASS_NEW_TWEETS_BAR))
+                .forEach(node => node.click());
+        });
+    });
+
+    // 監視オプションの作成
+    const options = {
+        childList: true
+    };
+
+    //監視の開始
+	// void observe(
+    //   Node target,
+    //   MutationObserverInit options
+    // );
+    observer.observe(streamItem, options);
+ })();
